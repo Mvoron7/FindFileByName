@@ -59,23 +59,5 @@ namespace FindFileByName.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на txt.
-        /// </summary>
-        internal static string Mask {
-            get {
-                return ResourceManager.GetString("Mask", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на C:\Users\Sander\Documents\XmlPad Projects.
-        /// </summary>
-        internal static string StartFolder {
-            get {
-                return ResourceManager.GetString("StartFolder", resourceCulture);
-            }
-        }
     }
 }

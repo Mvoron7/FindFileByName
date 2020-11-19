@@ -19,8 +19,8 @@ namespace FindFileByName
 
             _fileFind = new FileFind(this);
 
-            //FileMask.Text = Properties.Settings.Mask;
-            //FolderName.Text = Properties.Settings.StartFolder;
+            FileMask.Text = Properties.Settings.Default.Mask;
+            FolderName.Text = Properties.Settings.Default.StartFolder;
         }
 
         /// <summary>
@@ -73,6 +73,8 @@ namespace FindFileByName
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
+            Properties.Settings.Default.Mask = FileMask.Text;
+            Properties.Settings.Default.StartFolder = FolderName.Text;
             Properties.Settings.Default.Save();
         }
     }
