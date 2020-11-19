@@ -1,0 +1,40 @@
+﻿<Window x:Class="FindFileByName.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FindFileByName"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        Closing="Window_Closing">
+    <Grid>
+        <Grid.RowDefinitions>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" Orientation="Vertical">
+            <Label Content="Стартовая директория"/>
+            <TextBox x:Name="FolderName"/>
+            <Label Content="Маска файла"/>
+            <TextBox x:Name="FileMask"/>
+            <Button Content="Искать" Click="Button_Start"/>
+            <Button Content="Остановить" Click="Button_Stop"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Orientation="Vertical">
+            <Label x:Name="TotalTime"/>
+            <Label x:Name="TotalFiles"/>
+            <Label x:Name="FindFiles"/>
+            <Label x:Name="CurrentDir"/>
+            <StackPanel x:Name="FileStack" Orientation="Vertical" Visibility="Collapsed"/>
+            <TreeView x:Name="FileTree">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Path=Nodes}">
+                        <TextBlock Text="{Binding Name}"/>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+        </StackPanel>
+    </Grid>
+</Window>
