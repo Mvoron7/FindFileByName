@@ -9,32 +9,37 @@
         Closing="Window_Closing">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0" Orientation="Vertical">
-            <Label Content="Стартовая директория"/>
-            <TextBox x:Name="FolderName"/>
-            <Label Content="Маска файла"/>
-            <TextBox x:Name="FileMask"/>
-            <Button Content="Искать" Click="Button_Start"/>
-            <Button Content="Остановить" Click="Button_Stop"/>
+            <Label Content="Стартовая директория" Margin="0,0,0,5" />
+            <TextBox x:Name="FolderName" Margin="0,0,0,5"/>
+            <Label Content="Маска файла" Margin="0,0,0,5"/>
+            <TextBox x:Name="FileMask" Margin="0,0,0,5"/>
+            <Button Content="Искать" Click="Button_Start"  Margin="0,0,0,5"/>
+            <Button Content="Остановить" Click="Button_Stop"  Margin="0,0,0,5"/>
         </StackPanel>
-        <StackPanel Grid.Column="1" Orientation="Vertical">
-            <Label x:Name="TotalTime"/>
-            <Label x:Name="TotalFiles"/>
-            <Label x:Name="FindFiles"/>
-            <Label x:Name="CurrentDir"/>
-            <StackPanel x:Name="FileStack" Orientation="Vertical" Visibility="Collapsed"/>
-            <TreeView x:Name="FileTree">
-                <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate ItemsSource="{Binding Path=Nodes}">
-                        <TextBlock Text="{Binding Name}"/>
-                    </HierarchicalDataTemplate>
-                </TreeView.ItemTemplate>
-            </TreeView>
+        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical">
+            <Label x:Name="TotalTime" Margin="0,0,0,5" Content="Время: "/>
+            <Label x:Name="TotalFiles" Margin="0,0,0,5" Content="Файлов обработано: "/>
+            <Label x:Name="FindFiles" Margin="0,0,0,5" Content="Файлов найдено: "/>
+            <Label x:Name="CurrentDir" Margin="0,0,0,5" Content="Текущая папка: "/>
         </StackPanel>
+        <Grid Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <TreeView x:Name="FileTree">
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Path=Nodes}">
+                            <TextBlock Text="{Binding Name}"/>
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </Window>

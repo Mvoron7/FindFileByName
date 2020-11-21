@@ -31,15 +31,6 @@ namespace FindFileByName
         {
             DoInvoke(() => { CurrentDir.Content = folder; });
         }
-
-        /// <summary>
-        /// Добавляет файл в дерево
-        /// </summary>
-        /// <param name="file">Имя файла</param>
-        public void addFile(string file)
-        {
-            DoInvoke(() => { FileStack.Children.Add(new Label() { Content = file }); });
-        }
         
         /// <summary>
         /// Отобразить промежуточные итоги
@@ -48,16 +39,15 @@ namespace FindFileByName
         {
             DoInvoke(() =>
             {
-                TotalTime.Content = result.timeLeft.ToString();
-                TotalFiles.Content = $"Всего файлов: {result.totalFiles}";
-                FindFiles.Content = $"Найдено файлов: {result.foundFiles}";
+                TotalTime.Content = $"Время: " + result.timeLeft.ToString("hh':'mm':'ss");
+                TotalFiles.Content = $"Файлов обработано: {result.totalFiles}";
+                FindFiles.Content = $"Файлов найдено: {result.foundFiles}";
                 FileTree.ItemsSource = result.nodes;
             });
         }
 
         private void Button_Start(object sender, RoutedEventArgs e)
         {
-            FileStack.Children.Clear();
             _fileFind.Start(FolderName.Text, FileMask.Text);
         }
 
