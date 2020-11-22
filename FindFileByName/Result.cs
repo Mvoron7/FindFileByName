@@ -8,6 +8,5 @@ namespace FindFileByName
         public int totalFiles;
         public int foundFiles;
         public TimeSpan timeLeft;
-        public ObservableCollection<Node> nodes;
     }
 }

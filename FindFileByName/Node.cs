@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Windows.Threading;
 
 namespace FindFileByName
 {
@@ -10,12 +11,12 @@ namespace FindFileByName
 
         private static char[] split = new char[] { '\\' };
 
-        internal void Add(string fileName)
+        public void Add(string fileName, Dispatcher dispatcher)
         {
             if (Nodes == null)
                 Nodes = new ObservableCollection<Node>();
 
-            string[] dir = fileName.Split(split,2);
+            string[] dir = fileName.Split(split, 2);
 
             if (dir.Length > 1)
             {
@@ -23,18 +24,18 @@ namespace FindFileByName
                 {
                     if (node.Name.Equals(dir[0]))
                     {
-                        node.Add(dir[1]);
+                        node.Add(dir[1], dispatcher);
                         return;
                     }
                 }
 
                 Node newNode = new Node { Name = dir[0] };
-                Nodes.Add(newNode);
-                newNode.Add(dir[1]);
+                dispatcher.Invoke(() => Nodes.Add(newNode));
+                newNode.Add(dir[1], dispatcher);
                 return;
             }
 
-            Nodes.Add(new Node() { Name = dir[0] });
+            dispatcher.Invoke(()=> Nodes.Add(new Node() { Name = dir[0] }));
         }
     }
 }

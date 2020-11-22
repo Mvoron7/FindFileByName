@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,7 +18,10 @@ namespace FindFileByName
         {
             InitializeComponent();
 
-            _fileFind = new FileFind(this);
+            var fileTreeCollection = new ObservableCollection<Node>() { new Node() { Name = "Root", Nodes = new ObservableCollection<Node>() } };
+            FileTree.ItemsSource = fileTreeCollection;
+
+            _fileFind = new FileFind(this, fileTreeCollection);
 
             FileMask.Text = Properties.Settings.Default.Mask;
             FolderName.Text = Properties.Settings.Default.StartFolder;
@@ -42,7 +46,6 @@ namespace FindFileByName
                 TotalTime.Content = $"Время: " + result.timeLeft.ToString("hh':'mm':'ss");
                 TotalFiles.Content = $"Файлов обработано: {result.totalFiles}";
                 FindFiles.Content = $"Файлов найдено: {result.foundFiles}";
-                FileTree.ItemsSource = result.nodes;
             });
         }
 

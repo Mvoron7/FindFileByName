@@ -24,9 +24,15 @@ namespace FindFileByName
         private string _folder;
         private string _mask;
 
-        public FileFind(MainWindow window)
+        /// <summary>
+        /// Объект для поиска файлов.
+        /// </summary>
+        /// <param name="window">Объект для обратной связи (отображения результатов)</param>
+        /// <param name="nodes">Корень собираемой коллекции(возможно есть смысл передавать при запуске поиска)</param>
+        public FileFind(MainWindow window, ObservableCollection<Node> nodes)
         {
-            this._window = window;
+            _window = window;
+            _nodes = nodes;
 
             _worker = new BackgroundWorker();
             _worker.WorkerReportsProgress = true;
@@ -48,15 +54,18 @@ namespace FindFileByName
         /// <param name="mask">Маска поиска</param>
         public void Start(string folder, string mask)
         {
+            if (_worker.IsBusy)
+                return;
+
             this._folder = folder;
             this._mask = mask;
             _foundFiles = 0;
             _totalFiles = 0;
-            _nodes = new ObservableCollection<Node>() { new Node() };
             _isCancel = false;
             _startTime = DateTime.Now;
 
             _worker.RunWorkerAsync();
+            showResalt();
             _timer.Start();
         }
 
@@ -101,7 +110,7 @@ namespace FindFileByName
             {
                 if (reg.IsMatch(file))
                 {
-                    _nodes[0].Add(file);
+                    _nodes[0].Add(file, _window.Dispatcher);
                     _foundFiles++;
                 }
                 _totalFiles++;
@@ -119,7 +128,6 @@ namespace FindFileByName
                 totalFiles = _totalFiles,
                 foundFiles = _foundFiles,
                 timeLeft = duraction,
-                nodes = _nodes,
             };
             _window.SetResult(result);
         }
