@@ -13,15 +13,16 @@ namespace FindFileByName
     public partial class MainWindow : Window
     {
         private FileFind _fileFind;
+        private ObservableCollection<Node> _nodes;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            var fileTreeCollection = new ObservableCollection<Node>() { new Node() { Name = "Root", Nodes = new ObservableCollection<Node>() } };
-            FileTree.ItemsSource = fileTreeCollection;
+            _nodes = GetEmptyCollection();
+            FileTree.ItemsSource = _nodes;
 
-            _fileFind = new FileFind(this, fileTreeCollection);
+            _fileFind = new FileFind(this);
 
             FileMask.Text = Properties.Settings.Default.Mask;
             FolderName.Text = Properties.Settings.Default.StartFolder;
@@ -51,7 +52,9 @@ namespace FindFileByName
 
         private void Button_Start(object sender, RoutedEventArgs e)
         {
-            _fileFind.Start(FolderName.Text, FileMask.Text);
+            _nodes = GetEmptyCollection();
+            FileTree.ItemsSource = _nodes;
+            _fileFind.Start(FolderName.Text, FileMask.Text, _nodes);
         }
 
         private void Button_Stop(object sender, RoutedEventArgs e)
@@ -69,6 +72,11 @@ namespace FindFileByName
             Properties.Settings.Default.Mask = FileMask.Text;
             Properties.Settings.Default.StartFolder = FolderName.Text;
             Properties.Settings.Default.Save();
+        }
+
+        private ObservableCollection<Node> GetEmptyCollection()
+        {
+            return new ObservableCollection<Node>() { new Node() { Name = "Root", Nodes = new ObservableCollection<Node>() } };
         }
     }
 }

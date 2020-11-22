@@ -28,11 +28,9 @@ namespace FindFileByName
         /// Объект для поиска файлов.
         /// </summary>
         /// <param name="window">Объект для обратной связи (отображения результатов)</param>
-        /// <param name="nodes">Корень собираемой коллекции(возможно есть смысл передавать при запуске поиска)</param>
-        public FileFind(MainWindow window, ObservableCollection<Node> nodes)
+        public FileFind(MainWindow window)
         {
             _window = window;
-            _nodes = nodes;
 
             _worker = new BackgroundWorker();
             _worker.WorkerReportsProgress = true;
@@ -52,13 +50,15 @@ namespace FindFileByName
         /// </summary>
         /// <param name="folder">Стартовая папка</param>
         /// <param name="mask">Маска поиска</param>
-        public void Start(string folder, string mask)
+        /// <param name="nodes">Корень собираемой коллекции(возможно есть смысл передавать при запуске поиска)</param>
+        public void Start(string folder, string mask, ObservableCollection<Node> nodes)
         {
             if (_worker.IsBusy)
                 return;
 
-            this._folder = folder;
-            this._mask = mask;
+            _folder = folder;
+            _mask = mask;
+            _nodes = nodes;
             _foundFiles = 0;
             _totalFiles = 0;
             _isCancel = false;
