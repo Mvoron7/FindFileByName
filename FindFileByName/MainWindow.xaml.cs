@@ -57,6 +57,11 @@ namespace FindFileByName
             _fileFind.Start(FolderName.Text, FileMask.Text, _nodes);
         }
 
+        private void Button_Pause(object sender, RoutedEventArgs e)
+        {
+            _fileFind.Pause();
+        }
+
         private void Button_Stop(object sender, RoutedEventArgs e)
         {
             _fileFind.Stop();

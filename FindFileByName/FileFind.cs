@@ -3,7 +3,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Timers;
+using Timer = System.Timers.Timer;
 
 namespace FindFileByName
 {
@@ -19,6 +21,7 @@ namespace FindFileByName
         private int _totalFiles;
         private int _foundFiles;
         private bool _isCancel;
+        private bool _isPaused;
         private ObservableCollection<Node> _nodes;
 
         private string _folder;
@@ -70,6 +73,14 @@ namespace FindFileByName
         }
 
         /// <summary>
+        /// Приостанавливает поиск с возможномтью продолжения.
+        /// </summary>
+        public void Pause()
+        {
+            _isPaused = !_isPaused;
+        }
+
+        /// <summary>
         /// Останавливает поиск
         /// </summary>
         public void Stop()
@@ -114,6 +125,9 @@ namespace FindFileByName
                     _foundFiles++;
                 }
                 _totalFiles++;
+
+                while (_isPaused)
+                    Thread.Sleep(100);
             }
 
             foreach (string dir in Directory.EnumerateDirectories(folder))

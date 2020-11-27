@@ -22,6 +22,7 @@
             <Label Content="Маска файла" Margin="0,0,0,5"/>
             <TextBox x:Name="FileMask" Margin="0,0,0,5"/>
             <Button Content="Искать" Click="Button_Start"  Margin="0,0,0,5"/>
+            <Button x:Name="btnPause"  Content="Пауза" Click="Button_Pause"  Margin="0,0,0,5"/>
             <Button Content="Остановить" Click="Button_Stop"  Margin="0,0,0,5"/>
         </StackPanel>
         <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical">
